@@ -1,0 +1,56 @@
+---
+const { logo, theme } = Astro.props;
+---
+
+<nav class={"navbar " + theme} role="navigation" aria-label="main navigation">
+  <!-- Brand logo <a><img /></a> and burger icons nested within div.navbar-brand -->
+  <div class="navbar-brand is-align-items-center">
+    <a href="/" class="navbar-item p-0 px-2">
+      <img src={logo} alt="logo" style="max-height:none;height:80px" />
+    </a>
+
+    <a role="button" aria-label="menu" class="navbar-burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+
+  <div class="navbar-menu">
+    <div class="navbar-start">
+      <a href="/" class="navbar-item">Home</a>
+      <a href="/programming" class="navbar-item">Programming</a>
+      <a href="/flash-fiction" class="navbar-item">Flash fiction</a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">More</a>
+        <div class="navbar-dropdown">
+          <a href="/about" class="navbar-item">About me</a>
+          <hr class="navbar-divider" />
+          <a href="/support-me" class="navbar-item">Support me!</a>
+        </div>
+      </div>
+    </div>
+    <div class="navbar-end">
+      <a href="/anime" class="navbar-item">Anime</a>
+      <div class="navbar-item">
+        <div class="buttons">
+          <a href="#" class={"navbar-item button " + theme}
+            >Join the discord server!</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<script>
+  const el = {
+    burger: document.querySelector(".navbar-burger"),
+    menu: document.querySelector(".navbar-menu"),
+  };
+
+  el.burger.addEventListener("click", () => {
+    el.menu.classList.toggle("is-active");
+    el.burger.classList.toggle("is-active");
+  });
+</script>

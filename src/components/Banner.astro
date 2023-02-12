@@ -1,0 +1,25 @@
+---
+const { text } = Astro.props;
+const { gradient, thumbnail, color = "has-text-white" } = Astro.props;
+---
+
+<div style={gradient}>
+  <section class="section">
+    <div class="columns is-vcentered">
+      <div class="column is-6-tablet is-12-mobile">
+        <figure class="image is-4by3">
+          <img src={thumbnail} style="object-fit:scale-down;z-index:1" alt="" />
+        </figure>
+      </div>
+
+      <div class="column is-6-tablet has-text-centered-mobile">
+        <h4
+          class={"title is-size-1-tablet is-size-4-mobile has-text-weight-bold " +
+            color}
+        >
+          {text}
+        </h4>
+      </div>
+    </div>
+  </section>
+</div>

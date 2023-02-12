@@ -1,0 +1,114 @@
+---
+import logo from "/logo_white.png";
+import Banner from "../../components/Banner.astro";
+import Message from "../../components/Message.astro";
+import Layout from "../../layouts/Layout.astro";
+import Carousel from "../../components/Carousel.jsx";
+import CarouselCell from "../../components/CarouselCell.astro";
+import Card from "../../components/Card.astro";
+const prgIndex = await Astro.glob("../../content/programming/index.md");
+const tutorials = await Astro.glob(
+  "../../content/programming/tutorials/**/*.md"
+);
+const misc = await Astro.glob("../../content/programming/misc/**/*.md");
+const oneShots = tutorials.filter((tutorial) => !tutorial.frontmatter.parts);
+const series = tutorials.filter((tutorial) => tutorial.frontmatter.parts);
+---
+
+<Layout title="TC | Programming" theme="is-black" logo={logo}>
+  <Banner
+    text="Programming </>"
+    gradient="background: linear-gradient(0deg, #000 0%, #0a0a0a 100%);"
+    thumbnail={logo}
+  />
+  <Message
+    msgClass="message is-dark"
+    headerClass="message-header is-radiusless"
+    msgHeader="Checkout quick, one-part tutorials"
+    bodyClass="message-body"
+  >
+    <Carousel client:load>
+      {
+        oneShots.map((tutorial) => {
+          const { thumbnail, href, description, title, alt } =
+            tutorial.frontmatter;
+          return (
+            <CarouselCell>
+              <Card
+                thumbnail={thumbnail}
+                alt={alt}
+                description={description}
+                title={title}
+                alt={alt}
+                href={href}
+              />
+            </CarouselCell>
+          );
+        })
+      }
+    </Carousel>
+  </Message>
+
+  <Message
+    msgClass="message is-dark"
+    headerClass="message-header is-radiusless"
+    msgHeader="Checkout discussions related to programming"
+bodyClass="message-body"
+  >
+    <Carousel client:load>
+      {
+        misc.map((post) => {
+          const { thumbnail, href, description, title, alt } = post.frontmatter;
+          return (
+            <CarouselCell>
+              <Card
+                thumbnail={thumbnail}
+                alt={alt}
+                description={description}
+                title={title}
+                alt={alt}
+                href={href}
+              />
+            </CarouselCell>
+          );
+        })
+      }
+    </Carousel>
+  </Message>
+
+  <Message
+    msgClass="message is-dark"
+    headerClass="message-header is-radiusless"
+    msgHeader="Checkout programming tutorial series"
+    bodyClass="message-body"
+  >
+    <Carousel client:load>
+      {
+        series.map((post) => {
+          const { thumbnail, href, description, title, alt } = post.frontmatter;
+          return (
+            <CarouselCell>
+              <Card
+                thumbnail={thumbnail}
+                alt={alt}
+                description={description}
+                title={title}
+                alt={alt}
+                href={href}
+              />
+            </CarouselCell>
+          );
+        })
+      }
+    </Carousel>
+  </Message>
+
+  {
+    prgIndex.map((post) => {
+      console.log(prgIndex);
+      console.log(post);
+      const { Content } = post;
+      return <Content />;
+    })
+  }
+</Layout>

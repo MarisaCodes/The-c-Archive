@@ -1,0 +1,37 @@
+---
+const { thumbnail, alt, description, title, href } = Astro.props;
+---
+
+<style>
+  .custom-content {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-hover {
+    transition: transform 0.4s ease;
+  }
+  .card-hover:hover {
+    transform: scale(1.03);
+  }
+</style>
+<div class="card-hover card">
+  <div class="card-image">
+    <figure class="image is-3by2">
+      <img src={thumbnail} alt={alt} style="object-fit:cover" />
+    </figure>
+  </div>
+  <div class="card-content">
+    <p class="title mb-2 is-size-5 has-text-weight-bold">{title}</p>
+    <p class="custom-content">
+      {description}
+    </p>
+  </div>
+  <footer class="card-footer is-justify-content-center">
+    <a
+      href={href}
+      class="card-footer-item button is-info is-light is-radiusless">view</a
+    >
+  </footer>
+</div>

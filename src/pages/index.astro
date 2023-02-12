@@ -1,0 +1,52 @@
+---
+import Banner from "../components/Banner.astro";
+import Card from "../components/Card.astro";
+import Message from "../components/Message.astro";
+import Layout from "../layouts/Layout.astro";
+import Carousel from "../components/Carousel.jsx";
+import CarouselCell from "../components/CarouselCell.astro";
+
+const data = await Astro.glob("../content/home/index.md");
+const programmingPosts = await Astro.glob("../content/programming/**/*.md");
+const filteredProgrammingPosts = programmingPosts.filter(
+  (post) => !post.frontmatter.id
+);
+import logo from "/logo_transparent.png";
+---
+
+<Layout title="TC | Home" theme="is-link" logo={logo}>
+  <Banner
+    text="THE COMPREHENSIVE ARCHIVE"
+    gradient="background: linear-gradient(0deg, rgba(62,142,208,1) 0%, rgba(72,95,199,1) 100%);"
+    thumbnail={logo}
+  />
+  <Message
+    msgClass="message is-link"
+    headerClass="message-header is-radiusless is-size-5-tablet is-size-6-mobile"
+    msgHeader="Checkout programming posts!"
+    bodyClass="message-body"
+  >
+    <Carousel client:load>
+      {
+        filteredProgrammingPosts.map((post) => {
+          const { thumbnail, href, title, description } = post.frontmatter;
+          return (
+            <CarouselCell>
+              <Card
+                thumbnail={thumbnail}
+                description={description}
+                title={title}
+                href={href}
+              />
+            </CarouselCell>
+          );
+        })
+      }
+    </Carousel>
+  </Message>
+  {
+    data.map(({ Content }) => {
+      return <Content />;
+    })
+  }
+</Layout>
