@@ -12,6 +12,11 @@ const filteredProgrammingPosts = programmingPosts.filter(
   (post) => !post.frontmatter.id
 );
 import logo from "/logo_transparent.png";
+const msgClasses = {
+  message: "message is-link",
+  header: "message-header is-radiusless is-size-5-tablet is-size-6-mobile",
+  body: "message-body",
+};
 ---
 
 <Layout title="TC | Home" theme="is-link" logo={logo}>
@@ -20,11 +25,8 @@ import logo from "/logo_transparent.png";
     gradient="background: linear-gradient(0deg, rgba(62,142,208,1) 0%, rgba(72,95,199,1) 100%);"
     thumbnail={logo}
   />
-  <Message
-    msgClass="message is-link"
-    headerClass="message-header is-radiusless is-size-5-tablet is-size-6-mobile"
-    msgHeader="Checkout programming posts!"
-    bodyClass="message-body"
+  <Message msgClasses={msgClasses}
+  header="Checkout programming posts!"
   >
     <Carousel client:load>
       {

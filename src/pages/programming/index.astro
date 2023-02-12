@@ -13,6 +13,12 @@ const tutorials = await Astro.glob(
 const misc = await Astro.glob("../../content/programming/misc/**/*.md");
 const oneShots = tutorials.filter((tutorial) => !tutorial.frontmatter.parts);
 const series = tutorials.filter((tutorial) => tutorial.frontmatter.parts);
+
+const msgClasses = {
+  message: "message is-dark",
+  header: "message-header is-radiusless is-size-5-tablet is-size-6-mobile",
+  body: "message-body",
+};
 ---
 
 <Layout title="TC | Programming" theme="is-black" logo={logo}>
@@ -21,12 +27,7 @@ const series = tutorials.filter((tutorial) => tutorial.frontmatter.parts);
     gradient="background: linear-gradient(0deg, #000 0%, #0a0a0a 100%);"
     thumbnail={logo}
   />
-  <Message
-    msgClass="message is-dark"
-    headerClass="message-header is-radiusless"
-    msgHeader="Checkout quick, one-part tutorials"
-    bodyClass="message-body"
-  >
+  <Message msgClasses={msgClasses} header="Checkout quick, one-part tutorials">
     <Carousel client:load>
       {
         oneShots.map((tutorial) => {
@@ -50,10 +51,8 @@ const series = tutorials.filter((tutorial) => tutorial.frontmatter.parts);
   </Message>
 
   <Message
-    msgClass="message is-dark"
-    headerClass="message-header is-radiusless"
-    msgHeader="Checkout discussions related to programming"
-bodyClass="message-body"
+  msgClasses={msgClasses}
+    header="Checkout discussions related to programming"
   >
     <Carousel client:load>
       {
@@ -77,10 +76,9 @@ bodyClass="message-body"
   </Message>
 
   <Message
-    msgClass="message is-dark"
-    headerClass="message-header is-radiusless"
-    msgHeader="Checkout programming tutorial series"
-    bodyClass="message-body"
+  msgClasses={msgClasses}
+    header="Checkout programming tutorial series"
+   
   >
     <Carousel client:load>
       {

@@ -1,12 +1,12 @@
 ---
-const { msgClass, headerClass, msgHeader, bodyClass } = Astro.props;
+const { msgClasses, header } = Astro.props;
 ---
 
-<div class={msgClass}>
-  <h2 class={headerClass}>
-    {msgHeader}
+<div class={msgClasses?.message || ""}>
+  <h2 class={msgClasses?.header || ""}>
+    <p>{header}</p>
   </h2>
-  <div class={bodyClass}>
+  <div class={msgClasses?.body || ""}>
     <slot />
   </div>
 </div>

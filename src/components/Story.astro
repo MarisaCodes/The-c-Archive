@@ -1,0 +1,30 @@
+---
+const { title, href, date, storyClasses } = Astro.props;
+---
+
+<style>
+  .custom {
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 95%;
+    margin: 0 auto;
+  }
+</style>
+<div class={"card " + storyClasses?.mt6||""}>
+  <div class="card-header has-text-centered">
+    <p class="card-header-title is-size-4">{title}</p>
+  </div>
+  <div class="card-content has-background-dark-light">
+    <div class={"content " + storyClasses?.custom||""}>
+      <slot />
+    </div>
+  </div>
+  <time class="is-block p-3" style="color:#aaa" datetime={date}
+    >{new Date(date).toLocaleDateString()}</time
+  >
+  <footer class={"card-footer " + storyClasses?.isHidden||""}>
+    <a href={href} class="button card-footer-item is-dark">read more...</a>
+  </footer>
+</div>
