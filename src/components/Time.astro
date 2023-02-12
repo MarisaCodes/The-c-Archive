@@ -1,0 +1,9 @@
+---
+const { date } = Astro.props;
+---
+
+<time
+  class="is-inline-block my-4 has-background-dark p-2 has-text-white"
+  style="border-radius:5px;font-size:x-small"
+  datetime={date}>{new Date(date).toDateString()}</time
+>

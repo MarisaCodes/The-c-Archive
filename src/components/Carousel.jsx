@@ -1,6 +1,9 @@
 import { useRef } from "preact/hooks";
 import "../css/carousel.css";
-const Carousel = ({ children }) => {
+const Carousel = ({ children, theme }) => {
+  const scrollBarStyles = `.thumbBg::-webkit-scrollbar-thumb {
+  background-color: ${theme?.color||""};
+}`;
   const carouselRef = useRef();
   const handleClick = (id) => {
     if (id === "right") {
@@ -11,16 +14,19 @@ const Carousel = ({ children }) => {
   };
   return (
     <div className="carousel-wrapper">
-      <div className="carousel" ref={carouselRef}>
+      <div className="carousel thumbBg" ref={carouselRef}>
+        <style>
+          {scrollBarStyles}
+        </style>
         <button
-          className="button left is-link p-1 is-hidden-touch"
+          className={"button left p-1 is-hidden-touch " + theme?.className||""}
           onClick={() => handleClick("left")}
         >
           <p className="is-size-3 has-text-weight-bold">{"\u25C3"}</p>
         </button>
         {children}
         <button
-          className="button right is-link p-1 is-hidden-touch"
+          className={"button right p-1 is-hidden-touch " + theme?.className||""}
           onClick={() => handleClick("right")}
         >
           <p className="is-size-3 has-text-weight-bold">{"\u25B9"}</p>

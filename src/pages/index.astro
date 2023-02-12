@@ -8,14 +8,19 @@ import CarouselCell from "../components/CarouselCell.astro";
 
 const data = await Astro.glob("../content/home/index.md");
 const programmingPosts = await Astro.glob("../content/programming/**/*.md");
-const filteredProgrammingPosts = programmingPosts.filter(
+let filteredProgrammingPosts = programmingPosts.filter(
   (post) => !post.frontmatter.id
 );
+filteredProgrammingPosts = filteredProgrammingPosts.sort((a, b) => {
+  return (
+    new Date(b.frontmatter.date).getTime() -
+    new Date(a.frontmatter.date).getTime()
+  );
+});
 import logo from "/logo_transparent.png";
 const msgClasses = {
   message: "message is-link",
   header: "message-header is-radiusless is-size-5-tablet is-size-6-mobile",
-  body: "message-body",
 };
 ---
 
@@ -25,13 +30,12 @@ const msgClasses = {
     gradient="background: linear-gradient(0deg, rgba(62,142,208,1) 0%, rgba(72,95,199,1) 100%);"
     thumbnail={logo}
   />
-  <Message msgClasses={msgClasses}
-  header="Checkout programming posts!"
-  >
-    <Carousel client:load>
+  <Message msgClasses={msgClasses} header="Checkout Recent Programming Posts!">
+    <Carousel theme={{ className: "is-link", color: "#485fc7" }} client:load>
       {
         filteredProgrammingPosts.map((post) => {
-          const { thumbnail, href, title, description } = post.frontmatter;
+          const { thumbnail, href, title, description, date } =
+            post.frontmatter;
           return (
             <CarouselCell>
               <Card
@@ -39,6 +43,7 @@ const msgClasses = {
                 description={description}
                 title={title}
                 href={href}
+                date={date}
               />
             </CarouselCell>
           );

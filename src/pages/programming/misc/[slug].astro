@@ -1,0 +1,30 @@
+---
+import Time from "../../../components/Time.astro";
+import Layout from "../../../layouts/Layout.astro";
+
+export const getStaticPaths = async () => {
+  const misc = await Astro.glob("../../../content/programming/misc/*.md");
+  return misc.map((post) => {
+    const { title, alt, thumbnail, slug, date } = post.frontmatter;
+    const { Content } = post;
+    return {
+      params: { slug },
+      props: { title, alt, thumbnail, date, Content },
+    };
+  });
+};
+const { title, alt, thumbnail, date, Content } = Astro.props;
+---
+
+<Layout theme="is-dark" logo="/logo_white.png" title={title}>
+  <main class="section">
+    <article class="container">
+      <h1 class="title is-5-mobile">{title}</h1>
+      <Time date={date}/>
+      <figure class="image is-3by1 mb-6">
+        <img src={thumbnail} style="object-fit:scale-down" alt={alt} />
+      </figure>
+      <div class="content is-size-5-tablet is-size-6-mobile"><Content /></div>
+    </article>
+  </main>
+</Layout>

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/IndexLayout.astro
-date: 10-2-2023
-img: /logo_black.png
+date: 2/10/2023
+thumbnail: /logo_black.png
 id: programming-index
 title: Programming | Home
 ---

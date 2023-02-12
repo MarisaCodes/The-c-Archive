@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/IndexLayout.astro
 title: Why The c-Archive?
-date: 7-2-2023
-img: /logo_blue.jpeg
+date: 2/6/2023
+thumbnail: /logo_blue.jpeg
 ---
 
 I started learning JavaScript when I couldn't understand how pointers worked in C++. At the time, I was only concerned with getting a
@@ -14,8 +14,3 @@ From maxing out the call stack with infinite recursion, to reading the propertie
 Now don't get me wrong. I am by no means an expert on web development. I am just a lonely college student who found solace and joy in programming. That does not make me an expert but it helped me understand major concepts in web dev that I didn't know I was ever going to be interested in.
 
 **So, why did I make the c-Archive anyways?** Because I want to share my knowledge with people who either don't believe that they can learn programming or are absolute beginners who have no idea where to start. I am basically the first drill sergeant you meet in the army. Welcome to the field soldier. Think of me as the first or even second stage boss fight of a game. Hopefully, by the time you clear this stage you will have strong fundamentals in JavaScript web development.
-
-### What about the anime and flash fiction sections?
-
-The anime section contains recommendations and miscellaneous
-discussions related to anime. The flash fiction section has short stories that I have written (I am an avid writer). I hope you enjoy whichever of those things appeal to you. If neither appeals to you, I hope you find my tutorials to be useful!

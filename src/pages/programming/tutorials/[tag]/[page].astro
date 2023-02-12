@@ -1,0 +1,60 @@
+---
+import Time from "../../../../components/Time.astro";
+import Layout from "../../../../layouts/Layout.astro";
+
+export const getStaticPaths = async ({ paginate }) => {
+  const tutorials = await Astro.glob(
+    "../../../../content/programming/tutorials/**/*.md"
+  );
+  let tags = [];
+  const taggedTuts = tutorials.filter((tut) => {
+    if (tut.frontmatter.tag) {
+      if (!tags.includes(tut.frontmatter.tag)) {
+        tags.push(tut.frontmatter.tag);
+      }
+      return tut.frontmatter.tag;
+    }
+  });
+
+  return tags.map((tag) => {
+    const filteredTuts = taggedTuts.filter(
+      (tut) => tut.frontmatter.tag === tag
+    );
+    const modifiedTag = tag.split(" ").join("-");
+    return paginate(filteredTuts, {
+      params: { tag: modifiedTag },
+      pageSize: 1,
+    });
+  });
+};
+const { page } = Astro.props;
+const { title, alt, date, thumbnail } = page.data[0].frontmatter;
+const { Content } = page.data[0];
+console.log(page.url);
+---
+
+<Layout theme="is-dark" logo="/logo_white.png" title={title}>
+  <main class="section">
+    <article class="container">
+      <h1 class="title is-5-mobile">{title}</h1>
+      <Time date={date}/>
+      <figure class="image is-3by1 mb-6">
+        <img src={thumbnail} style="object-fit:scale-down" alt={alt} />
+      </figure>
+      <div class="content is-size-5-tablet is-size-6-mobile"><Content /></div>
+      <div class="has-text-centered">
+        <a
+          href={page.url.prev || "#"}
+          class={page.url.prev ? "button is-primary" : "is-hidden"}
+          >&leftarrow; previous</a
+        >
+        <span class="mx-2"></span>
+        <a
+          href={page.url.next || "#"}
+          class={page.url.next ? "button is-primary" : "is-hidden"}
+          >next &rightarrow;</a
+        >
+      </div>
+    </article>
+  </main>
+</Layout>

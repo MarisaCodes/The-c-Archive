@@ -7,17 +7,51 @@ import Carousel from "../../components/Carousel.jsx";
 import CarouselCell from "../../components/CarouselCell.astro";
 import Card from "../../components/Card.astro";
 const prgIndex = await Astro.glob("../../content/programming/index.md");
+
+let misc = await Astro.glob("../../content/programming/misc/**/*.md");
+misc = misc.sort((a, b) => {
+  return (
+    new Date(b.frontmatter.date).getTime() -
+    new Date(a.frontmatter.date).getTime()
+  );
+});
 const tutorials = await Astro.glob(
   "../../content/programming/tutorials/**/*.md"
 );
-const misc = await Astro.glob("../../content/programming/misc/**/*.md");
-const oneShots = tutorials.filter((tutorial) => !tutorial.frontmatter.parts);
-const series = tutorials.filter((tutorial) => tutorial.frontmatter.parts);
-
+let oneShots = tutorials.filter((tutorial) => !tutorial.frontmatter.tag);
+oneShots = oneShots.sort((a, b) => {
+  return (
+    new Date(b.frontmatter.date).getTime() -
+    new Date(a.frontmatter.date).getTime()
+  );
+});
+let series = tutorials.filter((tutorial) => tutorial.frontmatter.tag);
+series = series.sort((a, b) => {
+  return (
+    new Date(b.frontmatter.date).getTime() -
+    new Date(a.frontmatter.date).getTime()
+  );
+});
+let tags = [];
+series.forEach((tut) => {
+  if (!tags.includes(tut.frontmatter.tag)) {
+    tags.push(tut.frontmatter.tag);
+  }
+});
+let organizedSeries = [];
+organizedSeries = tags.map((tag) => {
+  let filtered = series.filter((tut) => tut.frontmatter.tag === tag);
+  filtered.sort((a, b) => {
+    return (
+      new Date(a.frontmatter.date).getTime() -
+      new Date(b.frontmatter.date).getTime()
+    );
+  });
+  return { tag, filtered };
+});
 const msgClasses = {
   message: "message is-dark",
   header: "message-header is-radiusless is-size-5-tablet is-size-6-mobile",
-  body: "message-body",
 };
 ---
 
@@ -28,10 +62,10 @@ const msgClasses = {
     thumbnail={logo}
   />
   <Message msgClasses={msgClasses} header="Checkout quick, one-part tutorials">
-    <Carousel client:load>
+    <Carousel theme={{ className: "is-dark", color: "#363636" }} client:load>
       {
         oneShots.map((tutorial) => {
-          const { thumbnail, href, description, title, alt } =
+          const { thumbnail, href, description, title, alt, date } =
             tutorial.frontmatter;
           return (
             <CarouselCell>
@@ -42,6 +76,7 @@ const msgClasses = {
                 title={title}
                 alt={alt}
                 href={href}
+                date={date}
               />
             </CarouselCell>
           );
@@ -51,13 +86,14 @@ const msgClasses = {
   </Message>
 
   <Message
-  msgClasses={msgClasses}
+    msgClasses={msgClasses}
     header="Checkout discussions related to programming"
   >
-    <Carousel client:load>
+    <Carousel theme={{ className: "is-dark", color: "#363636" }} client:load>
       {
         misc.map((post) => {
-          const { thumbnail, href, description, title, alt } = post.frontmatter;
+          const { thumbnail, href, description, title, alt, date } =
+            post.frontmatter;
           return (
             <CarouselCell>
               <Card
@@ -67,6 +103,7 @@ const msgClasses = {
                 title={title}
                 alt={alt}
                 href={href}
+                date={date}
               />
             </CarouselCell>
           );
@@ -75,31 +112,40 @@ const msgClasses = {
     </Carousel>
   </Message>
 
-  <Message
-  msgClasses={msgClasses}
-    header="Checkout programming tutorial series"
-   
-  >
-    <Carousel client:load>
-      {
-        series.map((post) => {
-          const { thumbnail, href, description, title, alt } = post.frontmatter;
-          return (
-            <CarouselCell>
-              <Card
-                thumbnail={thumbnail}
-                alt={alt}
-                description={description}
-                title={title}
-                alt={alt}
-                href={href}
-              />
-            </CarouselCell>
-          );
-        })
-      }
-    </Carousel>
-  </Message>
+  {
+    organizedSeries.map((seriesObject) => {
+      const { tag, filtered } = seriesObject;
+      return (
+        <Message
+          msgClasses={msgClasses}
+          header={"Checkout programming tutorial series on " + tag}
+        >
+          <Carousel
+            theme={{ className: "is-dark", color: "#363636" }}
+            client:load
+          >
+            {filtered.map((tut) => {
+              const { thumbnail, alt, href, description, title, date } =
+                tut.frontmatter;
+              return (
+                <CarouselCell>
+                  <Card
+                    thumbnail={thumbnail}
+                    alt={alt}
+                    description={description}
+                    title={title}
+                    alt={alt}
+                    href={href}
+                    date={date}
+                  />
+                </CarouselCell>
+              );
+            })}
+          </Carousel>
+        </Message>
+      );
+    })
+  }
 
   {
     prgIndex.map((post) => {

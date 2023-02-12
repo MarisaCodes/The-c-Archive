@@ -1,4 +1,6 @@
 ---
+import Time from "../components/Time.astro";
+
 const { frontmatter } = Astro.props;
 ---
 
@@ -8,7 +10,7 @@ const { frontmatter } = Astro.props;
       <div class="columns is-vcentered is-gapless">
         <img
           class="column is-5 is-12-mobile"
-          src={frontmatter.img}
+          src={frontmatter.thumbnail}
           style="object-fit: scale-down;max-height:300px"
           alt="logo"
         />
@@ -19,6 +21,7 @@ const { frontmatter } = Astro.props;
         </div>
       </div>
       <div class="is-size-5-tablet is-size-6-mobile">
+        <Time date={frontmatter.date} />
         <slot />
       </div>
     </div>

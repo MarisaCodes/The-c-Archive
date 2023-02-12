@@ -1,10 +1,10 @@
 ---
 title: React tutorial - Building The c-Archive using React js - Part 1
-href: /programming/tutorials/react-tc/1
+href: programming/tutorials/React-js/1
 thumbnail: /test-images/bocchi_attention_.png
 description: lorem ipsum dolor sit amat sdsd dnksl dsklds edsnjf sdnvk ernj vernvje reev
-parts: true
-path: tutorials/react-tc/1
+date: 1/28/2023
+tag: React js
 ---
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas quis natus,
